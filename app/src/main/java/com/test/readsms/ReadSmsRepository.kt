@@ -6,6 +6,9 @@ import android.net.Uri
 import android.util.Log
 
 class ReadSmsRepository(private val contentResolver: ContentResolver) {
+    /*
+    * Getting All SMS received by given number
+    * */
     suspend fun ReadSmsByNumberAndDays(
         phoneNumber: String,
         days: Int,

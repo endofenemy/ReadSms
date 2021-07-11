@@ -17,12 +17,15 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.test.readsms.databinding.FragmentMainBinding
 
-
+/*
+* We are using MVVM Design pattern for this application.
+* */
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val READ_SMS_REQUEST_CODE: Int = 101
     private var requestCount: Int = 0
 
+    //Lazy initialization of viewModel
     private val readSmsViewModel: ReadSmsViewModel by viewModels {
         ReadSmsModelFactory(ReadSmsRepository(activity?.contentResolver!!))
     }
@@ -32,6 +35,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Two way data binding. Button clicks will be handle in ViewModel only.
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         with(binding) {
             viewModel = readSmsViewModel
@@ -63,6 +67,9 @@ class MainFragment : Fragment() {
         })
     }
 
+    /*
+    * Check and Request permission for Read SMS.
+    * */
     private fun checkRequestPermissions() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -75,6 +82,9 @@ class MainFragment : Fragment() {
         }
     }
 
+    /*
+    * Handling user response for requested permissions.
+    * */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -90,6 +100,9 @@ class MainFragment : Fragment() {
         }
     }
 
+    /*
+    * Handling when user denied the requested permissions
+    * */
     private fun permissionsNotGranted() {
         if (requestCount < 2) {
             requestPermissions(

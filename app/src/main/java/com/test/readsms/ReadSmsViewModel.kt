@@ -32,6 +32,9 @@ class ReadSmsViewModel(
         get() = _smsList
 
 
+    /*
+    * Submit button click event handled here.
+    * */
     fun calculate() {
         if (!validatePhoneNumber()) {
             _phoneError.value = "Please Enter Valid Phone Numnber"
@@ -50,6 +53,9 @@ class ReadSmsViewModel(
         return phoneNumber.length == 10
     }
 
+    /*
+    * After granting the read SMS permission, Read SMS and get the list of SMS received by particular number.
+    * */
     fun permissionGranted() {
         viewModelScope.launch(Dispatchers.IO) {
             val response =
